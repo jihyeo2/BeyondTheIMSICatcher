@@ -49,7 +49,8 @@ However, since I am not comfortable enough to spend $60 on products + @ on inter
 
 Put a programmable USIM card into a smart card reader, connect it to your computer, and fire up the SIM Personalize tools (GRSIMWrite.exe). Now, click *Read Card*, then write your own IMSI, KI, and OPC. Click *Same with LTE* and finalize it with *Write Card* button.
 
-![SIM Personalize tools](/images/SIM_Personalize_tools)
+![SIM Personalize tools](/images/SIM_Personalize_tools.png)
+This is an image I copied from [here](https://nickvsnetworking.com/roll-your-own-usims-for-private-lte-networks/)(hehe give me a break guys), so the values will not represent the values I stated below.
 
 For the mentioned three values, I believe they can be anything. In case you wonder, I used the following
 
@@ -58,9 +59,9 @@ IMSI : 901700000020936
 KI : 4933f9c5a83e5718c52e54066dc78dcf
 OPC : fc632f97bd249ce0d16ba79e6505d300
 ```
-Now, we are ready for this part! Great job if you have followed along this far :)
+Neat, now take out the USIM card and put it in your test UE/smartphone. Great job if you have followed along this far :)
 
-### b. Configuration
+### b. More Configuration
   
   There are in total of three configuration files to edit: epc.conf, enb.conf, and user_db.csv. "The eNB & EPC config files will need to be edited such that the MMC & MNC values are the same across both files. The user DB file needs to be updated so that it contains the credentials associated with the USIM card being used in the UE. (SRSRAN COTS UE Application Note)"
   
@@ -130,4 +131,15 @@ Now, we are ready for this part! Great job if you have followed along this far :
   
   Make sure IMSI, KI, and OPC match those you used to program USIM previously. For the rest of the inputs, I just sticked to the default.
   
-  
+### c. Set up an APN point on your phone  
+### d. Even more Configuration
+### e. Connect UE to the Internet via EPC (Optional)
+### f. Run srsEPC & srsENB
+### g. Connect UE to the private network
+
+Phew...At last, we are over, but only for this experiment. We are only one fifth way through. Way to go!!
+
+
+## Passive Attack w/ srsUE & WireShark
+
+### Objectives
