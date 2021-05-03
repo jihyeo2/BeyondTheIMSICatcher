@@ -1,6 +1,6 @@
 # **Detailed Procedures**
 
-### 1. PC Setup: Ubuntu 20.04 (Dual Boot), UHD Driver & srsRAN on core i7 PC
+## 1. PC Setup: Ubuntu 20.04 (Dual Boot), UHD Driver & srsRAN on core i7 PC
 
 * [Ubuntu 20.04 (Dual Boot) Installation](https://linoxide.com/install-ubuntu-18-04-dual-boot-windows-10/)
 * Install UHD Driver 
@@ -25,9 +25,9 @@
   $ make
   ```
   
-### 2. Configuration
+## 2. Configuration
   
-  We can either remove the extension(.example) of an example configuration file or install base configuration files by running the following command in the build folder
+  We can either remove the extension(.example) of an example configuration file or install base configuration files by running the following command in the build folder.
   ```
   $ cd ~/srsRAN/build
   $ sudo srsRAN_install_configs.sh service 
@@ -35,7 +35,32 @@
   ```
   Configuration files are now installed for all users, not just to the user directory.
   
-### 3. Create a private LTE network with COTS UE chipped with programmable USIM
+## 3. Create a private LTE network for COTS UE with programmable USIM 
+
+### a. Program a USIM card with *Milenage* support
+
+#### Requirements
+
+This subexperiment requires a programmable USIM card with *Milenage* support along with a smart card reader. I believe the official manual along with many other related posts use Sysmocom USIM that is supported by pySIM which enables you to write key information on top of it. 
+
+However, since I am not comfortable enough to spend $60 on products + @ on international shipping, I decided to buy one from AliExpress. I found a pretty decent, cheap USIM from OYEITIMES as well as their smart card reader, I bought both from them. Thankfully, for the software, I discovered [this gorgeous post](http://www.zhixun-wireless.top/install-and-configure-srslte-enb-epc-on-ubuntu) where you can download .rar of SIM Personalize tools. Thank you, John Wu!
+
+#### How to write on USIMs
+
+Put a programmable USIM card into a smart card reader, connect it to your computer, and fire up the SIM Personalize tools (GRSIMWrite.exe). Now, click *Read Card*, then write your own IMSI, KI, and OPC. Click *Same with LTE* and finalize it with *Write Card* button.
+
+![SIM Personalize tools](/images/SIM_Personalize_tools)
+
+For the mentioned three values, I believe they can be anything. In case you wonder, I used the following
+
+```
+IMSI : 901700000020936 
+KI : 4933f9c5a83e5718c52e54066dc78dcf
+OPC : fc632f97bd249ce0d16ba79e6505d300
+```
+Now, we are ready for this part! Great job if you have followed along this far :)
+
+### b. Configuration
   
   There are in total of three configuration files to edit: epc.conf, enb.conf, and user_db.csv. "The eNB & EPC config files will need to be edited such that the MMC & MNC values are the same across both files. The user DB file needs to be updated so that it contains the credentials associated with the USIM card being used in the UE. (SRSRAN COTS UE Application Note)"
   
@@ -102,4 +127,7 @@
   19| # Note: Lines starting by '#' are ignored and will be overwritten
   20| ue3,mil,901700000020936,4933f9c5a83e5718c52e54066dc78dcf,opc,fc632f97bd249ce0d16ba79e6505d300,9000,0000000060f8,9,dynamic
   ```
+  
+  Make sure IMSI, KI, and OPC match those you used to program USIM previously. For the rest of the inputs, I just sticked to the default.
+  
   
