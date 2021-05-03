@@ -35,7 +35,7 @@
   ```
   Configuration files are now installed for all users, not just to the user directory.
   
-### Create a private LTE network with COTS UE chipped with programmable USIM
+### 3. Create a private LTE network with COTS UE chipped with programmable USIM
   
   There are in total of three configuration files to edit: epc.conf, enb.conf, and user_db.csv. "The eNB & EPC config files will need to be edited such that the MMC & MNC values are the same across both files. The user DB file needs to be updated so that it contains the credentials associated with the USIM card being used in the UE. (SRSRAN COTS UE Application Note)"
   
