@@ -45,6 +45,9 @@ This subexperiment requires a programmable USIM card with *Milenage* support alo
 
 However, since I am not comfortable enough to spend $60 on products + @ on international shipping, I decided to buy one from AliExpress. I found a pretty decent, cheap USIM from OYEITIMES as well as their smart card reader, I bought both from them. Thankfully, for the software, I discovered [this gorgeous post](http://www.zhixun-wireless.top/install-and-configure-srslte-enb-epc-on-ubuntu) where you can download .rar of SIM Personalize tools. Thank you, John Wu!
 
+#### Official Document - COTS UE Application Note
+Most of the information are brought from this written by srsRAN team. Truly appreciate their hard work dedicated for beginners like me!
+
 #### How to write on USIMs
 
 Put a programmable USIM card into a smart card reader, connect it to your computer, and fire up the SIM Personalize tools (GRSIMWrite.exe). Now, click *Read Card*, then write your own IMSI, KI, and OPC. Click *Same with LTE* and finalize it with *Write Card* button.
@@ -132,14 +135,87 @@ Neat, now take out the USIM card and put it in your test UE/smartphone. Great jo
   Make sure IMSI, KI, and OPC match those you used to program USIM previously. For the rest of the inputs, I just sticked to the default.
   
 ### c. Set up an APN point on your phone  
-### d. Even more Configuration
-### e. Connect UE to the Internet via EPC (Optional)
-### f. Run srsEPC & srsENB
-### g. Connect UE to the private network
 
-Phew...At last, we are over, but only for this experiment. We are only one fifth way through. Way to go!!
+This part kind of got me off guard. It is because, unlike the phone settings that were shown in other guides, there were no way for my LG X4 phone to add a new APN point. Until I read that my carrier only allows it only if I place a foreign USIM in it. So, I did and finally it appeared as below. 
+
+![X4 APN setting](/images/apn_X4)
+
+The only thing I had to change was the name of my new APN point. I wrote it as "srsapn" so that I did not have to change the EPC configuration file. Make sure if the name of the APN in your test phone is same as that in epc.conf (line 30).
+
+### d. Connect UE to the Internet via EPC (Optional)
+
+In *srsRAN/srsepc*, there is a pre-configured masquerading script named *srsepc_if_masq.sh* which you can use to enable IP forwarding and set up Network Address Translation to provide Internet to UEs. In order to run this script, you must be aware of the interface you are using, so just type 
+```
+$ route
+```
+on you terminal.
+
+![route output](/images/route_output)
+
+I got the output as shown above, and, as you can see, my default destination is wlan0. My command then would look like
+```
+$ sudo ./srsepc_if_masq.sh wlan0
+```
+
+![masquerade success](/images/masquerade_success)
+
+Now, I got this message saying the internet between PC and EPC was successfully set up.
+
+### e. Run srsEPC & srsENB
+
+First, open up a terminal and run the following commands to initiate EPC.
+
+```
+$ cd ~/srsRAN
+$ sudo srsepc
+```
+
+![initialize EPC](/images/epc_initialization)
+
+Great, EPC is now set up. Next, open up another terminal and run the commands below to start ENB.
+```
+$ sudo srsenb
+```
+I received an output noting a successful build for my ENB from the ENB console
+
+![ENB setup success](/images/enb_setup_success)
+
+and another output that ENB is now connected to EPC from the EPC console.
+
+![EPC+ENB](/images/epc+enb)
 
 
-## Passive Attack w/ srsUE & WireShark
+### f. Connect UE to the private network
+
+Finally, the last step! Stretch your back and your fingers and give your keyboard a break. Oh, and yourself. Now, pick up your phone and connect it to the network you have been working on.
+
+
+
+I got the following messages from each console (EPC & ENB) as a confirmation for a successful connection.
+
+
+
+Phew...At last, we are over, but only for this experiment. We are only one fifth way through. However, be proud of yourself. Even if you are going to quit here, that's already a great work you've achived there. For others who are continuing, way to go!!
+
+
+## Passive Attack w/ srsRAN & WireShark
+
+***From here, commerical USIMs were used, not the programmable ones I used in the previous subexperiment, "3. Create a private LTE network for COTS UE with programmable USIM ".***
+
+### Objectives
+Obtain GUTI/TMSI of victim's UE and gain knowledge about the parameters (ex) EARFCN, TAC, MNC & MCC) that are used in enb.conf and epc.conf.
+
+For a passive attack, I utilized the following three: Service Mode, pdsch_ue.c in srsRAN, and wireshark. Along with them, others were also used for various purposes such as decoding ASN.
+
+First, the easiest way to gain information about the network nearby was through a Service Mode provided in smartphones.
+
+As mentioned, I use LG X4 phone signed up to a Korean network carrier, LG U+. In order to open up the service, on the dialing pad, I typed *123456# (this number really depends on which vendor your phone is manufactured from.)
+
+
+
+This showed up and, as you can see, I now knew more about EARFCN (frequency band my phone is using), Bandwidth, Cell ID, TAC, RRC State, GUTI/TMSI, and neigboring cell types and their EARFCNs. GUTI/IMSI was blurred for privacy issues.
+
+Since for passive attack using 
+
 
 ### Objectives
