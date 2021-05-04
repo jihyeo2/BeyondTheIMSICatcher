@@ -150,7 +150,7 @@ $ route
 ```
 on you terminal.
 
-![route output](/images/route_output)
+![route output](/images/route_output.png)
 
 I got the output as shown above, and, as you can see, my default destination is wlan0. My command then would look like
 ```
@@ -200,22 +200,21 @@ Phew...At last, we are over, but only for this experiment. We are only one fifth
 
 ## Passive Attack w/ srsRAN & WireShark
 
-***From here, commerical USIMs were used, not the programmable ones I used in the previous subexperiment, "3. Create a private LTE network for COTS UE with programmable USIM ".***
+****From here, commerical USIMs were used, not the programmable ones I used in the previous subexperiment, "3. Create a private LTE network for COTS UE with programmable USIM ".****
 
 ### Objectives
-Obtain GUTI/TMSI of victim's UE and gain knowledge about the parameters (ex) EARFCN, TAC, MNC & MCC) that are used in enb.conf and epc.conf.
+Obtain GUTI/TMSI of victim's UE and gain crucial knowledge about parameters (ex) EARFCN, TAC, MNC & MCC) that are needed for mimicking operational network.
 
+### Method
 For a passive attack, I utilized the following three: Service Mode, pdsch_ue.c in srsRAN, and wireshark. Along with them, others were also used for various purposes such as decoding ASN.
 
+#### a. Service Mode
 First, the easiest way to gain information about the network nearby was through a Service Mode provided in smartphones.
 
 As mentioned, I use LG X4 phone signed up to a Korean network carrier, LG U+. In order to open up the service, on the dialing pad, I typed *123456# (this number really depends on which vendor your phone is manufactured from.)
 
+![service mode](service_mode)
 
+This showed up and, as you can see, I now knew more about EARFCN (frequency band my phone is using), Bandwidth, Cell ID, TAC, RRC State, GUTI/TMSI, and neigboring cell types and their EARFCNs. (GUTI/IMSI was blurred for privacy issues.)
 
-This showed up and, as you can see, I now knew more about EARFCN (frequency band my phone is using), Bandwidth, Cell ID, TAC, RRC State, GUTI/TMSI, and neigboring cell types and their EARFCNs. GUTI/IMSI was blurred for privacy issues.
-
-Since for passive attack using 
-
-
-### Objectives
+* 
