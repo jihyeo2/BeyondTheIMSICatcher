@@ -213,7 +213,7 @@ First, the easiest way to gain information about the network nearby was through 
 
 As mentioned, I use LG X4 phone signed up to a Korean network carrier, LG U+. In order to open up the service, on the dialing pad, I typed *123456# (this number really depends on which vendor your phone is manufactured from.)
 
-![service mode](service_mode)
+![service mode](service_mode.png)
 
 This showed up and, as you can see, I now knew more about EARFCN (frequency band my phone is using), Bandwidth, Cell ID, TAC, RRC State, GUTI/TMSI, and neigboring cell types and their EARFCNs. (GUTI/IMSI was blurred for privacy issues.)
 
