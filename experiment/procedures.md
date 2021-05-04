@@ -215,7 +215,7 @@ As mentioned, I use LG X4 phone signed up to a Korean network carrier, LG U+. In
 
 ![service mode](/images/service_mode.png)
 
-This showed up and, as you can see, I now knew more about EARFCN (frequency band my phone is using), Bandwidth, PLMN(MCC + MNC), Cell ID, TAC, RRC State, GUTI/TMSI, and neigboring cell types and their EARFCNs. (GUTI/IMSI was blurred for privacy issues.)
+This showed up and, as you can see, I now knew more about EARFCN (frequency band my phone is using), Bandwidth, PLMN(MCC + MNC), Cell ID, TAC, RRC State, GUTI/TMSI, and neigboring cell types and their EARFCNs. (TAC and GUTI/IMSI were blurred for privacy issues.)
 
 I was wondering what other parameters mean, so in case you do so, refer to the list below:
 * RSSI = Received Signal Strength Indicator.
@@ -229,6 +229,6 @@ I was wondering what other parameters mean, so in case you do so, refer to the l
 
 With the following table, you can check if you are in a stable network connection. As you can see, mine is in a pretty good state.
 
-![Rs](/images/Rs)
+![Rs](/images/Rs.png)
 
-For more information, check out [this](https://www.signalbooster.com/blogs/news/acronyms-rsrp-rssi-rsrq-sinr#:~:text=RSSI%20%3D%20Received%20Signal%20Strength%20Indicator,to%20Interference%20plus%20Noise%20Ratio.)
+For more information, check out [this page](https://www.signalbooster.com/blogs/news/acronyms-rsrp-rssi-rsrq-sinr#:~:text=RSSI%20%3D%20Received%20Signal%20Strength%20Indicator,to%20Interference%20plus%20Noise%20Ratio.)
