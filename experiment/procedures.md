@@ -200,24 +200,26 @@ Phew...At last, we are over, but only for this experiment. We are only one fifth
 
 ## Passive Attack w/ srsRAN & WireShark
 
-****From here, commerical USIMs were used, not the programmable ones I used in the previous subexperiment, "3. Create a private LTE network for COTS UE with programmable USIM ".****
+****From here, commerical USIMs were used, not the programmable ones I used in the previous subexperiment, "3. Create a private LTE network for COTS UE with programmable USIM ". Thus, I am assuming that I have no control over the victim UE. ****
 
 ### Objectives
-Obtain GUTI/TMSI of victim's UE and gain crucial knowledge about parameters (ex) EARFCN, TAC, MNC & MCC) that are needed for mimicking operational network.
+Obtain GUTI/TMSI of victim's UE and gain crucial knowledge about parameters (EARFCN, TAC, MNC & MCC) for my rogue eNodeB to successfully mimick an operational network.
 
 ### Method
 For a passive attack, I utilized the following three: Service Mode, pdsch_ue.c in srsRAN, and wireshark. Along with them, others were also used for various purposes such as decoding ASN.
 
-#### a. Service Mode
-First, the easiest way to gain information about the network nearby was through a Service Mode provided in smartphones.
+### Background
+Both my target UE and test UE are signed up to a Korean network carrier, LG U+. Thus, I can retrieve any information from my test UE, but not from my target UE, until I discover its GUTI and narrow my action towards it.
 
-As mentioned, I use LG X4 phone signed up to a Korean network carrier, LG U+. In order to open up the service, on the dialing pad, I typed *123456# (this number really depends on which vendor your phone is manufactured from.)
+#### a. Service Mode: Obtain TAC, PLMN (MMC + MNC), EARFCN & GUTI/TMSI of my test UE
+
+In order to open up the service, on the dialing pad, I typed *123456# (this number really depends on which vendor your phone is manufactured from.)
 
 ![service mode](/images/service_mode.png)
 
-This showed up and, as you can see, I now knew more about EARFCN (frequency band my phone is using), Bandwidth, PLMN(MCC + MNC), Cell ID, TAC, RRC State, GUTI/TMSI, and neigboring cell types and their EARFCNs. (TAC and GUTI/IMSI were blurred for privacy issues.)
+This showed up and, as you can see, I can see the **EARFCN (frequency band my phone is using)**, Bandwidth, **PLMN(MCC + MNC)**, Cell ID, **TAC**, RRC State, **GUTI/TMSI**, and neigboring cell types and their EARFCNs of my test UE in order to determine parameters for my rogue eNodeB. (TAC and GUTI/IMSI were blurred for privacy issues.)
 
-I was wondering what other parameters mean, so in case you do so, refer to the list below:
+In case you are wondering what other parameters mean, please refer to the list below:
 * RSSI = Received Signal Strength Indicator.
 * RSRP = Reference Signal Received Power.
 * RSRQ = Reference Signal Received Quality.
@@ -231,4 +233,10 @@ With the following table, you can check if you are in a stable network connectio
 
 ![Rs](/images/Rs.png)
 
-For more information, check out [this page](https://www.signalbooster.com/blogs/news/acronyms-rsrp-rssi-rsrq-sinr#:~:text=RSSI%20%3D%20Received%20Signal%20Strength%20Indicator,to%20Interference%20plus%20Noise%20Ratio.)
+For more information, check out [this page](https://www.signalbooster.com/blogs/news/acronyms-rsrp-rssi-rsrq-sinr#:~:text=RSSI%20%3D%20Received%20Signal%20Strength%20Indicator,to%20Interference%20plus%20Noise%20Ratio.).
+
+For a rogue eNodeB, I will be using the same TAC and PLMN (MMC + MNC) discovered in this step. However, in order to trigger cell reselection only on the target UE, I need to calculate an optimal EARFCN and figure out GUTI/TMSI of it.
+
+**Calculate an optimal EARFCN**
+
+As stated in [Evolved Universal Terrestrial Radio Access (E-UTRA); User Equipment (UE) procedures in idle mode (Release 16.3.0](https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=2432) shown below,
