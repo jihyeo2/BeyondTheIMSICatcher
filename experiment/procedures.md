@@ -238,7 +238,7 @@ For a rogue eNodeB, I will be using the same TAC and PLMN (MMC + MNC) discovered
 
 - Calculate an optimal EARFCN
 
-Theoretical Approach:
+-- Theoretical Approach:
 
 As stated in [Evolved Universal Terrestrial Radio Access (E-UTRA); User Equipment (UE) procedures in idle mode (Release 16.3.0)](https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=2432) shown below,
 
@@ -270,10 +270,39 @@ As shown above, unlike the official document from 3GPP, I need to add q-RxLevMin
 
 Second, the High priority frequencies (0: Lowest - 7: Highest) were obtainable from SIB Type 5 messages (INTER). 
 
-Practical Approach:
+-- Practical Approach:
 
+As a practice, I started off by running pdsch_ue.c with the following command to get MIB & SIB message Type 1 from PDSCH on frequency 806MHz. My main guide for this step was Appendix E. Decoding Paging Messages from [*Location Disclosure in LTE Networks by using IMSI Catcher*](/papers/Location Disclosure in LTE Networks by using IMSI Catcher) by Christian Sørseth.
 
+```
+$ ~/srsRAN/lib/examples/pdsch_ue –r fffe –f 806000000
+```
 
+However, this will not output the messages. Therefore, I needed to add the function *srslte_vec_fprint_byte()* after line 828 to print the hexstring to stdout. pdsch_ue.c should look like so:
+
+```
+828 |             if (n > 0) {
+829 |               srslte_vec_fprint_byte(stdout, data, n/8); OR srslte_vec_fprint_byte(stdout, data[0], n/8); (Update required)
+830 |               /* Send data if socket active */
+```
+In *srslte_vec_fprint_byte()*, the argument, *n*, is an integer indicating the data packet (if the value is greater than 1, a data packet is found.), and the other argument, *data*, is a poitner containing the paging packet.
+
+Now, I can see the hex string as below:
+
+![pdsch_ue result](/images/pdsch_ue_result.png)
+
+Since I did not have enough brain cells to interpret what this means, I copy-pasted the output to a [ASN decoder](http://www.marben-products.com/asn.1/services/decoder-asn1-lte.html).
+
+I finally got MIB & SIB Type 1 messages in a readable XML format as below.
+
+![mibsib1](/images/mibsib1.png)
+
+That was a decent warmup. Now, the real deal: SIB 3 & 5.
+
+Since receiving them is not supported by pdsch_ue.c, I needed to use the full srsUE.
+
+## Similar Guides
+[LimeSDR + SoapySDR + srsLTE](https://gist.github.com/JamesHagerman/fafec6ee2ee076fe7cda4cf4dd74edd0)
 
 
 
