@@ -299,7 +299,7 @@ I finally got MIB & SIB Type 1 messages in a readable XML format as below.
 
 That was a decent warmup. Now, the real deal: SIB 3 & 5.
 
-Since receiving them is not supported by pdsch_ue.c, I needed to use the full srsUE, which supports MAC layer packet captures that are interpretable by WireShark.
+Since receiving them is not supported by pdsch_ue.c, I needed to use the full srsUE, which supports [MAC layer](https://wiki.wireshark.org/MAC-LTE) packet captures that are interpretable by WireShark.
 
 continue with: http://www.softwareradiosystems.com/pipermail/srslte-users/2016-February/000156.html
 
