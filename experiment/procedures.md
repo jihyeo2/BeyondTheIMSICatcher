@@ -272,7 +272,7 @@ Second, the High priority frequencies (0: Lowest - 7: Highest) were obtainable f
 
 -- Practical Approach:
 
-As a practice, I started off by running pdsch_ue.c with the following command to get MIB & SIB message Type 1 from PDSCH on frequency 806MHz. My main guide for this step was Appendix E. Decoding Paging Messages from [*Location Disclosure in LTE Networks by using IMSI Catcher*](/papers/Location Disclosure in LTE Networks by using IMSI Catcher) by Christian Sørseth.
+As a practice, I started off by running pdsch_ue.c with the following command to get MIB & SIB message Type 1 from PDSCH on frequency 806MHz. My main guide for this step was Appendix E. Decoding Paging Messages from [*Location Disclosure in LTE Networks by using IMSI Catcher*](/papers/Location Disclosure in LTE Networks by using IMSI Catcher.pdf) by Christian Sørseth.
 
 ```
 $ ~/srsRAN/lib/examples/pdsch_ue –r fffe –f 806000000
@@ -299,7 +299,9 @@ I finally got MIB & SIB Type 1 messages in a readable XML format as below.
 
 That was a decent warmup. Now, the real deal: SIB 3 & 5.
 
-Since receiving them is not supported by pdsch_ue.c, I needed to use the full srsUE.
+Since receiving them is not supported by pdsch_ue.c, I needed to use the full srsUE, which supports MAC layer packet captures that are interpretable by WireShark.
+
+continue with: http://www.softwareradiosystems.com/pipermail/srslte-users/2016-February/000156.html
 
 ## Similar Guides
 [LimeSDR + SoapySDR + srsLTE](https://gist.github.com/JamesHagerman/fafec6ee2ee076fe7cda4cf4dd74edd0)
