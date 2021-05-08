@@ -242,7 +242,7 @@ Theoretical Approach:
 
 As stated in [Evolved Universal Terrestrial Radio Access (E-UTRA); User Equipment (UE) procedures in idle mode (Release 16.3.0)](https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=2432) shown below,
 
-![cell reselection criteria](/images/cell_reselect_criteria)
+![cell reselection criteria](/images/cell_reselection_criteria.png)
 
 given that a minimum power threshold ```Srxlev > ThreshX-HighP``` is met, a cell of higher priority frequency will trigger a cell reselection from UEs. Thus, to trigger it, I first need to figure out the minimum RX power and frequencies on a higher priority than that of a serving cell.
 
@@ -264,7 +264,7 @@ q-RxLevMin | minimum RX level in dBm mandatory in a cell that is operating as EU
 
 First, I was able to figure out how to calculate a minimum RX power for my eNodeB from this [Huawei Forum thread](https://forum.huawei.com/enterprise/en/q2-how-the-multi-carrier-cell-re-selection-happened-in-lte/thread/540339-100305).
 
-![huawei thread](/images/huawei_thread)
+![huawei thread](/images/huawei_thread.png)
 
 As shown above, unlike the official document from 3GPP, I need to add q-RxLevMin with ThreshX-High to get RSRP. (Update Required: Soon to be revealed which is right after conducting an actual experiment) 
 
