@@ -206,10 +206,7 @@ Phew...At last, we are over, but only for this experiment. We are only one fifth
 Obtain GUTI/TMSI of victim's UE and gain crucial knowledge about parameters (EARFCN, TAC, MNC & MCC) for my rogue eNodeB to successfully mimick an operational network.
 
 ### Method
-For a passive attack, I utilized the following three: Service Mode, pdsch_ue.c in srsRAN, and wireshark. Along with them, others were also used for various purposes such as decoding ASN.
-
-### Background
-Both my target UE and test UE are signed up to a Korean network carrier, LG U+. Thus, I can retrieve any information from my test UE, but not from my target UE, until I discover its GUTI and narrow my action towards it.
+For a passive attack, I utilized the following three: Service Mode, pdsch_ue.c in srsRAN, and srsUE with wireshark. Along with them, other toolss were also used for various purposes such as decoding ASN.
 
 #### a. Service Mode: Obtain TAC, PLMN (MMC + MNC), EARFCN & GUTI/TMSI of my test UE
 
@@ -235,8 +232,49 @@ With the following table, you can check if you are in a stable network connectio
 
 For more information, check out [this page](https://www.signalbooster.com/blogs/news/acronyms-rsrp-rssi-rsrq-sinr#:~:text=RSSI%20%3D%20Received%20Signal%20Strength%20Indicator,to%20Interference%20plus%20Noise%20Ratio.).
 
-For a rogue eNodeB, I will be using the same TAC and PLMN (MMC + MNC) discovered in this step. However, in order to trigger cell reselection only on the target UE, I need to calculate an optimal EARFCN and figure out GUTI/TMSI of it.
+For a rogue eNodeB, I will be using the same TAC and PLMN (MMC + MNC) discovered in this step. However, in order to trigger cell reselection only on the target UE, I need to calculate an optimal EARFCN and figure out GUTI/TMSI of it by sniffing SIB messages.
 
-**Calculate an optimal EARFCN**
+#### b. Sniff SIB messages
 
-As stated in [Evolved Universal Terrestrial Radio Access (E-UTRA); User Equipment (UE) procedures in idle mode (Release 16.3.0](https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=2432) shown below,
+- Calculate an optimal EARFCN
+
+Theoretical Approach:
+
+As stated in [Evolved Universal Terrestrial Radio Access (E-UTRA); User Equipment (UE) procedures in idle mode (Release 16.3.0)](https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=2432) shown below,
+
+![cell reselection criteria](/images/cell_reselect_criteria)
+
+given that a minimum power threshold ```Srxlev > ThreshX-HighP``` is met, a cell of higher priority frequency will trigger a cell reselection from UEs. Thus, to trigger it, I first need to figure out the minimum RX power and frequencies on a higher priority than that of a serving cell.
+
+Before explaining further, here are some terminologies you would wonder from the image above. Referenced from [Huawei Forum thread](https://forum.huawei.com/enterprise/en/q2-how-the-multi-carrier-cell-re-selection-happened-in-lte/thread/540339-100305), [Handbook_LTE_Cell_Reselection](http://sharetechnote.com/html/Handbook_LTE_Cell_Reselection.html) and [How LTE Stuff Works?](http://howltestuffworks.blogspot.com/2019/10/5g-nr-sib5.html).
+
+| Term | Explanation | where it can be found | default value | actual value |
+--- | --- | --- | --- | ---
+ThreshX-High/ ThreshX-HighP | The threshold of a target cell **Srxlev** to perfrom reselection from a low priority to a high priority cell. (i.e, a large ThreshXHigh value makes reselection harder) | SIB 5 | - | field value * 2 (dB)
+threshServingHighQ | The threshold of a serving cell **Squal** to perfrom reselection from a low priority to a high priority cell. (i.e, a large ThreshXHigh value makes reselection harder) | SIB 3 | - | field value * 2 (dB)
+q-RxLevMin | minimum RX level in dBm mandatory in a cell that is operating as EUTRA-FA | SIB 1 & 3 | -128 dBm ( IE value in SIB 1 is -64 ) | field value * 2 (dBm)
+
+* Srxlev: Cell selection RX level value (in dB) measured by UE; default value = Qrxlevmeas-Qrxlevmin (-128dBm).
+* Squal: Cell selection quality value (in dB); default value = Qqualmeas - qQualMin. 
+* Qrxlevemeas: RSCP level measured by UE.
+* Qqualmeas: EcNo level measured by UE.
+* qQualMin: a value specified in SIB.
+* EUTRAN: LTE architecture
+* UTRAN: UMTS architecture
+
+First, I was able to figure out how to calculate a minimum RX power for my eNodeB from this [Huawei Forum thread](https://forum.huawei.com/enterprise/en/q2-how-the-multi-carrier-cell-re-selection-happened-in-lte/thread/540339-100305).
+
+![huawei thread](/images/huawei_thread)
+
+As shown above, unlike the official document from 3GPP, I need to add q-RxLevMin with ThreshX-High to get RSRP. (Update Required: Soon to be revealed which is right after conducting an actual experiment) 
+
+Second, the High priority frequencies (0: Lowest - 7: Highest) were obtainable from SIB Type 5 messages (INTER). 
+
+Practical Approach:
+
+
+
+
+
+
+
