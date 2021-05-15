@@ -53,7 +53,6 @@ Most of the information are brought from this written by srsRAN team. Truly appr
 Put a programmable USIM card into a smart card reader, connect it to your computer, and fire up the SIM Personalize tools (GRSIMWrite.exe). Now, click *Read Card*, then write your own IMSI, KI, and OPC. Click *Same with LTE* and finalize it with *Write Card* button.
 
 ![SIM Personalize tools](/images/SIM_Personalize_tools.png)
-This is an image I copied from [here](https://nickvsnetworking.com/roll-your-own-usims-for-private-lte-networks/)(hehe give me a break guys), so the values will not represent the values I stated below.
 
 For the mentioned three values, I believe they can be anything. In case you wonder, I used the following
 
@@ -138,9 +137,10 @@ Neat, now take out the USIM card and put it in your test UE/smartphone. Great jo
 
 This part kind of got me off guard. It is because, unlike the phone settings that were shown in other guides, there were no way for my LG X4 phone to add a new APN point. Until I read that my carrier only allows it only if I place a foreign USIM in it. So, I did and finally it appeared as below. 
 
-![X4 APN setting](/images/apn_X4)
+![add apn](/images/add_apn.png)
+![apn settings](/images/apn_settings.png)
 
-The only thing I had to change was the name of my new APN point. I wrote it as "srsapn" so that I did not have to change the EPC configuration file. Make sure if the name of the APN in your test phone is same as that in epc.conf (line 30).
+The only thing I had to change was the name and APN of my new APN point. I wrote both as "srsapn" so that I did not have to change the EPC configuration file. Make sure if the name and APN of the APN in your test phone is same as that in epc.conf (line 30).
 
 ### d. Connect UE to the Internet via EPC (Optional)
 
