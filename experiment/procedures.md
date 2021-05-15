@@ -299,9 +299,50 @@ I finally got MIB & SIB Type 1 messages in a readable XML format as below.
 
 That was a decent warmup. Now, the real deal: SIB 3 & 5.
 
-To achieve this, I modified the code in pdsch_ue.c to make it decode further SIB messages other than MIB and SIB Type 1 as well as to support [MAC layer](https://wiki.wireshark.org/MAC-LTE) packet captures that are interpretable by WireShark.
+To achieve this, I modified the code in pdsch_ue.c to make it decode further SIB messages other than MIB and SIB Type 1.
 
-continue with: http://www.softwareradiosystems.com/pipermail/srslte-users/2016-February/000156.html
+This part actually took me quite a while to figure out how it works, and, basically, I had to 1) calculate which SFN () and subframe each SIB message gets broadcasted from SIB Type 1 message 2) modify the code to decode PDSCH at the exact time I previously calculated. For more conceptual information, check out [Handbook_LTE_SFN](https://www.sharetechnote.com/html/Handbook_LTE_SFN.html#:~:text=In%20LTE%2C%20the%20arm%20ticking,number%20is%20called%20subframe%20number.&text=When%20SFN%20number%20hits%20the,it%20goes%20back%20to%200.)and [BasicProcedure_LTE_SIB_Scheduling](https://www.sharetechnote.com/html/BasicProcedure_LTE_SIB_Scheduling.html). 
+
+![SIB1](/images/SIB1.png]
+
+From the captured SIB Type 1 message above, I was able to detect periodicities of each SIB message, which I organized into a table below.
+
+| Periodicity | rf8 | rf16 | rf32 | rf64 |
+--- | --- | --- | --- | ---
+sibType# | ?? | ?? | ?? | ??
+
+Also, on the bottom, I saw what the si-WindowLength value (??ms) is.
+
+With those two, I had to modify line 764 of srsRAN/lib/examples/pdsch_ue.c.
+```
+763 |      /* We are looking for SIB1 Blocks, search only in appropiate places */
+764 |       if ((sf_idx == 5 && (sfn % 2) == 0) || mch_table[sf_idx] == 1) {
+765 |         decode_pdsch = true;
+766 |        } else {
+767 |          decode_pdsch = false;
+768 |        }
+```
+Based on the algorithm described in the second link, along with the help of [this forum post from srslte-users](http://www.softwareradiosystems.com/pipermail/srslte-users/2021-April/004198.html), the result looks like the following.
+```
+763 |      /* We are looking for SIB1 Blocks, search only in appropiate places */
+764 |       si_periodicity[4] = {16, 32, 64, 64}; 
+765 |       int n, x, a, sfn_e;
+766 |       n = ?;
+767 |       x = (n - 1) * winlen;
+768 |       a = x % 10;
+769 |       sfn_e = floor(x/10);
+770 |       if ((sf_idx == a) && ((sfn % si_periodicity[n]) == sfn_e)) {
+771 |         decode_pdsch = true;
+772 |        } else {
+773 |          decode_pdsch = false;
+774 |        }
+```
+As a result, I received the output as shown below in an order of SIB3, SIB5, SIB6, and SIB7.
+![SIB3](/images/SIB3.png]
+![SIB5](/images/SIB5.png]
+![SIB6](/images/SIB6.png]
+![SIB7](/images/SIB7.png]
+
 
 ## Similar Guides
 [LimeSDR + SoapySDR + srsLTE](https://gist.github.com/JamesHagerman/fafec6ee2ee076fe7cda4cf4dd74edd0)
