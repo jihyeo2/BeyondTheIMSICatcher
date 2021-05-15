@@ -238,7 +238,7 @@ For a rogue eNodeB, I will be using the same TAC and PLMN (MMC + MNC) discovered
 
 - Calculate an optimal EARFCN
 
--- Theoretical Approach:
+-------------------------------------------------------------------------- Theoretical Approach -----------------------------------------------------------------------------
 
 As stated in [Evolved Universal Terrestrial Radio Access (E-UTRA); User Equipment (UE) procedures in idle mode (Release 16.3.0)](https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=2432) shown below,
 
@@ -270,7 +270,7 @@ As shown above, unlike the official document from 3GPP, I need to add q-RxLevMin
 
 Second, the High priority frequencies (0: Lowest - 7: Highest) were obtainable from SIB Type 5 messages (INTER). 
 
--- Practical Approach:
+--------------------------------------------------------------------------- Practical Approach ------------------------------------------------------------------------------
 
 As a practice, I started off by running pdsch_ue.c with the following command to get MIB & SIB message Type 1 from PDSCH on frequency 806MHz. My main guide for this step was Appendix E. Decoding Paging Messages from [*Location Disclosure in LTE Networks by using IMSI Catcher*](/papers/Location Disclosure in LTE Networks by using IMSI Catcher.pdf) by Christian Sørseth.
 
