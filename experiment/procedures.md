@@ -198,7 +198,7 @@ I got the following messages from each console (EPC & ENB) as a confirmation for
 Phew...At last, we are over, but only for this experiment. We are only one fifth way through. However, be proud of yourself. Even if you are going to quit here, that's already a great work you've achived there. For others who are continuing, way to go!!
 
 
-## Passive Attack w/ srsRAN & WireShark
+## Passive Attack w/ pdsch_ue.c in srsRAN
 
 ****From here, commerical USIMs were used, not the programmable ones I used in the previous subexperiment, "3. Create a private LTE network for COTS UE with programmable USIM ". Thus, I am assuming that I have no control over the victim UE. ****
 
@@ -206,7 +206,7 @@ Phew...At last, we are over, but only for this experiment. We are only one fifth
 Obtain GUTI/TMSI of victim's UE and gain crucial knowledge about parameters (EARFCN, TAC, MNC & MCC) for my rogue eNodeB to successfully mimick an operational network.
 
 ### Method
-For a passive attack, I utilized the following three: Service Mode, pdsch_ue.c in srsRAN, and srsUE with wireshark. Along with them, other toolss were also used for various purposes such as decoding ASN.
+For a passive attack, I utilized the Service Mode and pdsch_ue.c in srsRAN. Along with them, other tools were also used for various purposes such as decoding ASN.
 
 #### a. Service Mode: Obtain TAC, PLMN (MMC + MNC), EARFCN & GUTI/TMSI of my test UE
 
@@ -343,6 +343,53 @@ As a result, I received the output as shown below in an order of SIB3, SIB5, SIB
 ![SIB6](/images/SIB6.png]
 ![SIB7](/images/SIB7.png]
 
+After copy-pasting it to a [ASN decoder](http://www.marben-products.com/asn.1/services/decoder-asn1-lte.html), I could see it in a read-friendly XML format.
+
+![SIB3 XML](/images/SIB3_XML.png]
+![SIB5 XML](/images/SIB5_XML.png]
+![SIB6 XML](/images/SIB6_XML.png]
+![SIB7 XML](/images/SIB7_XML.png]
+
+Awesome! Now, 
+1) Find a EARFCN that has a higher priority than that of UE's current serving cell.
+   dl_earfcn (downlinnk EARFCN) = ??
+2) Calculate the minimum power (dB) needed from q-RxLevMin and threshX-High in SIB Type 5 message.
+
+3) Reflect the changes in srsRAN/srsenb/enb.conf and srsRAN/srsenb/rr.conf.
+
+srsRAN/srsenb/enb.conf
+```
+63 | [rf]
+64 | dl_earfcn = ??
+65 | tx_gain = ??
+```
+&
+srsRAN/srsenb/rr.conf
+```
+56 |    // rf_port = 0;
+57 |    cell_id = 0x01;
+58 |    tac = 0x0007;
+59 |    pci = 1;
+60 |    // root_seq_idx = 204;
+61 |    dl_earfcn = ??;
+```
+
+All things covered, now it is time to run my rogue eNodeB!
+
+```
+$ sudo srsenb
+```
+
+After a few second, we see that the victim UE is successfully connected to my private network both from the output of srsenb and Service Mode screen of UE.
+
+![srsenb caught UE](/images/srsenb_caught_UE.png)
+![Service Mode after connection](/images/service_mode_after_conn.png]
+
+## Semi-Passive Attack: IMSI Catcher
+
+## Active Attack (1): Location Leak
+## Active Attack (2): Denial-of-Service (DoS)
+## Active Attack (3): Eavesdrop VoLTE calls
 
 ## Similar Guides
 [LimeSDR + SoapySDR + srsLTE](https://gist.github.com/JamesHagerman/fafec6ee2ee076fe7cda4cf4dd74edd0)
