@@ -190,17 +190,7 @@
   $ srsran_install_configs.sh user
   ```
   
-## 2. Configuration
-  
-  We can either remove the extension(.example) of an example configuration file or install base configuration files by running the following command in the build folder.
-  ```
-  $ cd ~/srsRAN/build
-  $ sudo srsRAN_install_configs.sh service 
-  $ cd ./etc/srsran
-  ```
-  Configuration files are now installed for all users, not just to the user directory.
-  
-## 3. Create a private LTE network for COTS UE with programmable USIM 
+## 2. Create a private LTE network for COTS UE with programmable USIM 
 
 ### a. Program a USIM card with *Milenage* support
 
@@ -230,7 +220,7 @@ Neat, now take out the USIM card and put it in your test UE/smartphone. Great jo
 
 ### b. More Configuration
   
-  There are in total of three configuration files to edit: epc.conf, enb.conf, and user_db.csv. "The eNB & EPC config files will need to be edited such that the MMC & MNC values are the same across both files. The user DB file needs to be updated so that it contains the credentials associated with the USIM card being used in the UE. (SRSRAN COTS UE Application Note)"
+  There are in total of three configuration files to edit located in **~/.config/srsran** (I first thought they are located in ~/srsRAN but later found out that they exist as an example.): epc.conf, enb.conf, and user_db.csv. "The eNB & EPC config files will need to be edited such that the MMC & MNC values are the same across both files. The user DB file needs to be updated so that it contains the credentials associated with the USIM card being used in the UE. (SRSRAN COTS UE Application Note)"
   
   #### * epc.conf
   ```
@@ -363,7 +353,7 @@ I got the following messages from each console (EPC & ENB) as a confirmation for
 Phew...At last, we are over, but only for this experiment. We are only one fifth way through. However, be proud of yourself. Even if you are going to quit here, that's already a great work you've achieved there. For others who are continuing, way to go!!
 
 
-## Passive Attack w/ pdsch_ue.c in srsRAN
+## 3. Passive Attack w/ pdsch_ue.c in srsRAN
 
 ****From here, commerical USIMs were used, not the programmable ones I used in the previous subexperiment, "3. Create a private LTE network for COTS UE with programmable USIM ". Thus, I am assuming that I have no control over the victim UE. ****
 
@@ -550,11 +540,11 @@ After a few second, we see that the victim UE is successfully connected to my pr
 ![srsenb caught UE](/images/srsenb_caught_UE.png)
 ![Service Mode after connection](/images/service_mode_after_conn.png]
 
-## Semi-Passive Attack: IMSI Catcher
+## 4. Semi-Passive Attack: IMSI Catcher
 
-## Active Attack (1): Location Leak
-## Active Attack (2): Denial-of-Service (DoS)
-## Active Attack (3): Eavesdrop VoLTE calls
+## 5. Active Attack (1): Location Leak
+## 6. Active Attack (2): Denial-of-Service (DoS)
+## 7. Active Attack (3): Eavesdrop VoLTE calls
 
 ## Similar Guides
 [LimeSDR + SoapySDR + srsLTE](https://gist.github.com/JamesHagerman/fafec6ee2ee076fe7cda4cf4dd74edd0)
