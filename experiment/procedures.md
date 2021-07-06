@@ -137,12 +137,13 @@
   
 * Commands to install srsRAN (**USRP should stay connected to PC! If not, the UE and eNB applications will not be build by default.**) 
      
-  Mandatory libraries:
+  Get mandatory libraries:
   ```
   $ sudo apt-get install cmake libfftw3-dev libmbedtls-dev libboost-program-options-dev libconfig++-dev libsctp-dev
   ```
-  Build srsRAN:
+  Download and build srsRAN:
   ```
+  $ sudo su
   $ cd ~
   $ git clone https://github.com/srsran/srsRAN.git
   $ cd srsRAN
@@ -153,7 +154,7 @@
   $ make test
   ```
   
-  In doing so, if you run into an error like this...
+  After ```$ make``` command, if you run into an error like this...
   
   ```
   cc1plus: error: bad value (‘tigerlake’) for ‘-march=’ switch
@@ -180,6 +181,14 @@
   $ sudo update-alternatives --config gcc
   ```
   *** credit goes to [this stackoverflow post](https://stackoverflow.com/questions/64493692/cc1plus-error-bad-value-tigerlake-for-march-switch-compilation-error). 
+  
+  Install srsRAN:
+  
+  ```
+  $ make install
+  $ ldconfig
+  $ srsran_install_configs.sh user
+  ```
   
 ## 2. Configuration
   
