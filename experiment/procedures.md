@@ -13,7 +13,126 @@
   
   ```
   $ uhd_usrp_probe
-  $ find_uhd_devices
+  [INFO] [UHD] linux; GNU C++ version 9.3.0; Boost_107100; UHD_3.15.0.0-release
+  [INFO] [B200] Detected Device: B210
+  [INFO] [B200] Operating over USB 3.
+  [INFO] [B200] Initialize CODEC control...
+  [INFO] [B200] Initialize Radio control...
+  [INFO] [B200] Performing register loopback test... 
+  [INFO] [B200] Register loopback test passed
+  [INFO] [B200] Performing register loopback test... 
+  [INFO] [B200] Register loopback test passed
+  [INFO] [B200] Setting master clock rate selection to 'automatic'.
+  [INFO] [B200] Asking for clock rate 16.000000 MHz... 
+  [INFO] [B200] Actually got clock rate 16.000000 MHz.
+    _____________________________________________________
+   /
+  |       Device: B-Series Device
+  |     _____________________________________________________
+  |    /
+  |   |       Mboard: B210
+  |   |   serial: 3218CC8
+  |   |   name: MyB210
+  |   |   product: 2
+  |   |   revision: 4
+  |   |   FW Version: 8.0
+  |   |   FPGA Version: 16.0
+  |   |   
+  |   |   Time sources:  none, internal, external, gpsdo
+  |   |   Clock sources: internal, external, gpsdo
+  |   |   Sensors: ref_locked
+  |   |     _____________________________________________________
+  |   |    /
+  |   |   |       RX DSP: 0
+  |   |   |   
+  |   |   |   Freq range: -8.000 to 8.000 MHz
+  |   |     _____________________________________________________
+  |   |    /
+  |   |   |       RX DSP: 1
+  |   |   |   
+  |   |   |   Freq range: -8.000 to 8.000 MHz
+  |   |     _____________________________________________________
+  |   |    /
+  |   |   |       RX Dboard: A
+  |   |   |     _____________________________________________________
+  |   |   |    /
+  |   |   |   |       RX Frontend: A
+  |   |   |   |   Name: FE-RX2
+  |   |   |   |   Antennas: TX/RX, RX2
+  |   |   |   |   Sensors: temp, rssi, lo_locked
+  |   |   |   |   Freq range: 50.000 to 6000.000 MHz
+  |   |   |   |   Gain range PGA: 0.0 to 76.0 step 1.0 dB
+  |   |   |   |   Bandwidth range: 200000.0 to 56000000.0 step 0.0 Hz
+  |   |   |   |   Connection Type: IQ
+  |   |   |   |   Uses LO offset: No
+  |   |   |     _____________________________________________________
+  |   |   |    /
+  |   |   |   |       RX Frontend: B
+  |   |   |   |   Name: FE-RX1
+  |   |   |   |   Antennas: TX/RX, RX2
+  |   |   |   |   Sensors: temp, rssi, lo_locked
+  |   |   |   |   Freq range: 50.000 to 6000.000 MHz
+  |   |   |   |   Gain range PGA: 0.0 to 76.0 step 1.0 dB
+  |   |   |   |   Bandwidth range: 200000.0 to 56000000.0 step 0.0 Hz
+  |   |   |   |   Connection Type: IQ
+  |   |   |   |   Uses LO offset: No
+  |   |   |     _____________________________________________________
+  |   |   |    /
+  |   |   |   |       RX Codec: A
+  |   |   |   |   Name: B210 RX dual ADC
+  |   |   |   |   Gain Elements: None
+  |   |     _____________________________________________________
+  |   |    /
+  |   |   |       TX DSP: 0
+  |   |   |   
+  |   |   |   Freq range: -8.000 to 8.000 MHz
+  |   |     _____________________________________________________
+  |   |    /
+  |   |   |       TX DSP: 1
+  |   |   |   
+  |   |   |   Freq range: -8.000 to 8.000 MHz
+  |   |     _____________________________________________________
+  |   |    /
+  |   |   |       TX Dboard: A
+  |   |   |     _____________________________________________________
+  |   |   |    /
+  |   |   |   |       TX Frontend: A
+  |   |   |   |   Name: FE-TX2
+  |   |   |   |   Antennas: TX/RX
+  |   |   |   |   Sensors: temp, lo_locked
+  |   |   |   |   Freq range: 50.000 to 6000.000 MHz
+  |   |   |   |   Gain range PGA: 0.0 to 89.8 step 0.2 dB
+  |   |   |   |   Bandwidth range: 200000.0 to 56000000.0 step 0.0 Hz
+  |   |   |   |   Connection Type: IQ
+  |   |   |   |   Uses LO offset: No
+  |   |   |     _____________________________________________________
+  |   |   |    /
+  |   |   |   |       TX Frontend: B
+  |   |   |   |   Name: FE-TX1
+  |   |   |   |   Antennas: TX/RX
+  |   |   |   |   Sensors: temp, lo_locked
+  |   |   |   |   Freq range: 50.000 to 6000.000 MHz
+  |   |   |   |   Gain range PGA: 0.0 to 89.8 step 0.2 dB
+  |   |   |   |   Bandwidth range: 200000.0 to 56000000.0 step 0.0 Hz
+  |   |   |   |   Connection Type: IQ
+  |   |   |   |   Uses LO offset: No
+  |   |   |     _____________________________________________________
+  |   |   |    /
+  |   |   |   |       TX Codec: A
+  |   |   |   |   Name: B210 TX dual DAC
+  |   |   |   |   Gain Elements: None
+
+
+  $ uhd_find_devices
+  [INFO] [UHD] linux; GNU C++ version 9.3.0; Boost_107100; UHD_3.15.0.0-release
+  --------------------------------------------------
+  -- UHD Device 0
+  --------------------------------------------------
+  Device Address:
+      serial: 3218CC8
+      name: MyB210
+      product: B210
+      type: b200
   ```
   
 * Commands to install srsRAN (**USRP should stay connected to PC! If not, the UE and eNB applications will not be build by default.**) 
