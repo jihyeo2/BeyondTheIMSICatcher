@@ -6,9 +6,17 @@
 * Install UHD Driver 
 
   ```
-  $ sudo apt-get install libuhd-dev libuhd003 uhd-host
+  $ sudo apt-get install libuhd-dev libuhd3.15.0 uhd-host
   ```
-* Commands to install srsRAN
+  
+* Connect USRP B210 to your computer and check if UHD Driver reads it successfully
+  
+  ```
+  $ uhd_usrp_probe
+  $ find_uhd_devices
+  ```
+  
+* Commands to install srsRAN (**USRP should stay connected to PC! If not, the UE and eNB applications will not be build by default.**) 
      
   Mandatory libraries:
   ```
@@ -19,11 +27,40 @@
   $ cd ~
   $ git clone https://github.com/srsran/srsRAN.git
   $ cd srsRAN
-  $ rm CMakeCache.txt
-  $ make clean
-  $ cmake ..
+  $ mkdir build
+  $ cd build
+  $ cmake ../
   $ make
+  $ make test
   ```
+  
+  In doing so, if you run into an error like this...
+  
+  ```
+  cc1plus: error: bad value (‘tigerlake’) for ‘-march=’ switch
+
+  cc1plus: note: valid arguments to ‘-march=’ switch are: nocona core2 nehalem corei7 westmere sandybridge corei7-avx ivybridge core-avx-i haswell core-avx2    broadwell skylake skylake-avx512 cannonlake icelake-client icelake-server cascadelake bonnell atom silvermont slm goldmont goldmont-plus tremont knl knm x86-64 eden-x2 nano nano-1000 nano-2000 nano-3000 nano-x2 eden-x4 nano-x4 k8 k8-sse3 opteron opteron-sse3 athlon64 athlon64-sse3 athlon-fx amdfam10 barcelona bdver1 bdver2 bdver3 bdver4 znver1 znver2 btver1 btver2 native
+
+  cc1plus: error: bad value (‘tigerlake’) for ‘-mtune=’ switch
+
+  cc1plus: note: valid arguments to ‘-mtune=’ switch are: nocona core2 nehalem corei7 westmere sandybridge corei7-avx ivybridge core-avx-i haswell core-avx2 broadwell skylake skylake-avx512 cannonlake icelake-client icelake-server cascadelake bonnell atom silvermont slm goldmont goldmont-plus tremont knl knm intel x86-64 eden-x2 nano nano-1000 nano-2000 nano-3000 nano-x2 eden-x4 nano-x4 k8 k8-sse3 opteron opteron-sse3 athlon64 athlon64-sse3 athlon-fx amdfam10 barcelona bdver1 bdver2 bdver3 bdver4 znver1 znver2 btver1 btver2 generic native
+
+  make[2]: *** [makefileCommon/compile.core.mk:240: /home/josue/Documents/of_v0.11.0_linux64gcc6_release/libs/openFrameworksCompiled/lib/linux64/obj/Release/libs/openFrameworks/events/ofEvents.o] Error 1
+
+  make[1]: *** [makefileCommon/compile.core.mk:204: Release] Error 2
+
+  make[1]: Leaving directory '/home/josue/Documents/of_v0.11.0_linux64gcc6_release/libs/openFrameworksCompiled/project'
+  make: *** [/home/josue/Documents/of_v0.11.0_linux64gcc6_release/libs/openFrameworksCompiled/project/makefileCommon/compile.project.mk:125: Release] Error 2
+  ```
+  
+  If so, run the commands below to update gcc & g++ to a higher version (10) as a default:
+  
+  ```
+  $ sudo apt install gcc-10 g++-10
+  $ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 100 --slave /usr/bin/g++ g++ /usr/bin/g++-10 --slave /usr/bin/gcov gcov /usr/bin/gcov-10
+  $ sudo update-alternatives --config gcc
+  ```
+  *** credit goes to [this stackoverflow post](https://stackoverflow.com/questions/64493692/cc1plus-error-bad-value-tigerlake-for-march-switch-compilation-error). 
   
 ## 2. Configuration
   
