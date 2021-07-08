@@ -346,20 +346,25 @@ Finally, the last step! Stretch your back and your fingers and give your keyboar
 
 And THE END...! was what I thought, but no. When you ask 'yes', the life answers back with 'well...until you solve this...' Anyways, let's look at the error.
 
-![NAS Authentication Failure](/images/NAS_failure)
+![NAS Authentication Failure](/images/NAS_failure.png)
 
-I looked into the log files for each epc and enb, which were in ```/tmp```, and some parts looked unhappy. I highlighted those parts below.
+I looked into the log files for each epc and enb, which were in ```/tmp```, and some parts looked unhappy. I highlighted those parts below:
 
-![epc log](/images/epc_log)
-![enb log](/images/enb_log)
+-epc.log
+![epc log](/images/epc_log.png)
 
-I was puzzled and searched up some terms that looked important.
+-enb.log
+![enb log](/images/enb_log.png)
+
+(Actual logs are much longer.)
+
+I was puzzled and searched up some terms that looked important. ---
 
 With the help of Mr. Tallon from srsRAN, I was able to fix this issue by ---. 
 
 I got the following messages from each console (EPC & ENB) as a confirmation for a successful connection.
 
-![successful COTS+network setup](/images/successful_COTS+network_setup)
+![successful COTS+network setup](/images/successful_COTS+network_setup.png)
 
 Phew...At last, we are over, but only for this experiment. We are only one fifth way through. However, be proud of yourself. Even if you are going to quit here, that's already a great work you've achieved there. For others who are continuing, way to go!!
 
