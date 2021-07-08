@@ -344,11 +344,22 @@ and another output that ENB is now connected to EPC from the EPC console.
 
 Finally, the last step! Stretch your back and your fingers and give your keyboard a break. Oh, and yourself. Now, pick up your phone and connect it to the network you have been working on.
 
+And THE END...! was what I thought, but no. When you ask 'yes', the life answers back with 'well...until you solve this...' Anyways, let's look at the error.
 
+![NAS Authentication Failure](/images/NAS_failure)
+
+I looked into the log files for each epc and enb, which were in ```/tmp```, and some parts looked unhappy. I highlighted those parts below.
+
+![epc log](/images/epc_log)
+![enb log](/images/enb_log)
+
+I was puzzled and searched up some terms that looked important.
+
+With the help of Mr. Tallon from srsRAN, I was able to fix this issue by ---. 
 
 I got the following messages from each console (EPC & ENB) as a confirmation for a successful connection.
 
-
+![successful COTS+network setup](/images/successful_COTS+network_setup)
 
 Phew...At last, we are over, but only for this experiment. We are only one fifth way through. However, be proud of yourself. Even if you are going to quit here, that's already a great work you've achieved there. For others who are continuing, way to go!!
 
