@@ -290,7 +290,7 @@ Neat, now take out the USIM card and put it in your test UE/smartphone. Great jo
   
 ### c. Set up an APN point on your phone  
 
-This part kind of got me off guard. It is because, unlike the phone settings that were shown in other guides, there were no way for my LG X4 phone to add a new APN point. Until I read that my carrier only allows it only if I place a foreign USIM in it. So, I did and finally it appeared as below. 
+This part kind of caught me off guard. It is because, unlike the phone settings that were shown in other guides, there were no way for my LG X4 phone to add a new APN point. Until I read that my carrier only allows it only if I place a foreign USIM in it. So, I did and finally it appeared as below. 
 
 ![add apn](/images/add_apn.png)
 ![apn settings](/images/apn_settings.png)
@@ -371,7 +371,7 @@ Phew...At last, we are over, but only for this experiment. We are only one fifth
 
 ## 3. Passive Attack w/ pdsch_ue.c in srsRAN
 
-****From here, commerical USIMs were used, not the programmable ones I used in the previous subexperiment, "3. Create a private LTE network for COTS UE with programmable USIM ". Thus, I am assuming that I have no control over the victim UE. ****
+****From here, commerical USIMs were used, not the programmable ones I used in the previous subexperiment, "2. Create a private LTE network for COTS UE with programmable USIM ". Thus, I am assuming that I have no control over the victim UE. ****
 
 ### Objectives
 Obtain GUTI/TMSI of victim's UE and gain crucial knowledge about parameters (EARFCN, TAC, MNC & MCC) for my rogue eNodeB to successfully mimick an operational network.
@@ -443,13 +443,13 @@ Second, the High priority frequencies (0: Lowest - 7: Highest) were obtainable f
 
 --------------------------------------------------------------------------- Practical Approach ------------------------------------------------------------------------------
 
-As a practice, I started off by running pdsch_ue.c with the following command to get MIB & SIB message Type 1 from PDSCH on frequency 806MHz. My main guide for this step was Appendix E. Decoding Paging Messages from [*Location Disclosure in LTE Networks by using IMSI Catcher*](/papers/Location Disclosure in LTE Networks by using IMSI Catcher.pdf) by Christian Sørseth.
+As a practice, I started off by running pdsch_ue.c with the following command to get MIB & SIB message Type 1 from PDSCH on downlink frequency 889MHz. My main guide for this step was Appendix E. Decoding Paging Messages from [*Location Disclosure in LTE Networks by using IMSI Catcher*](/papers/Location Disclosure in LTE Networks by using IMSI Catcher.pdf) by Christian Sørseth.
 
 ```
-$ ~/srsRAN/lib/examples/pdsch_ue –r fffe –f 806000000
+$ ~/srsRAN/build/lib/examples/pdsch_ue –r fffe –f 889000000
 ```
 
-However, this will not output the messages. Therefore, I needed to add the function *srslte_vec_fprint_byte()* after line 828 to print the hexstring to stdout. pdsch_ue.c should look like so:
+However, this will not output the hex bytes of MIB & SIB messages. Therefore, I needed to add the function *srslte_vec_fprint_byte()* after line 828 to print the hexstring to stdout. pdsch_ue.c should look like so:
 
 ```
 828 |             if (n > 0) {
