@@ -200,6 +200,8 @@ This subexperiment requires a programmable USIM card with *Milenage* support alo
 
 However, since I am not comfortable enough to spend $60 on products + @ on international shipping, I decided to buy one from AliExpress. I found a pretty decent, cheap USIM from OYEITIMES as well as their smart card reader, I bought both from them. Thankfully, for the software, I discovered [this gorgeous post](http://www.zhixun-wireless.top/install-and-configure-srslte-enb-epc-on-ubuntu) where you can download .rar of SIM Personalize tools. Thank you, John Wu!
 
+Update: Unfortunately, it turned out that chinese sim card doesn't work well with COTS UEs. I'll be getting Sysmocom Simcards in a bit and retest this.
+
 #### Official Document - COTS UE Application Note
 Most of the information are brought from this written by srsRAN team. Truly appreciate their hard work dedicated for beginners like me!
 
@@ -557,6 +559,13 @@ After a few second, we see that the victim UE is successfully connected to my pr
 ![Service Mode after connection](/images/service_mode_after_conn.png]
 
 ## 4. Semi-Passive Attack: IMSI Catcher
+
+Along with the help of [this repo](https://github.com/Wooniety/srsLTE-Sniffer) by Wooniety, I was able to get the gist of what I should do.
+
+The basic steps are...
+1. Run *pdsch_ue*: Here, I capture paging requests into a raw .txt of hex bytes.
+2. Run *convert_to_csv.c*: From the raw text file, I extract imsis into *imsi.csv*
+3. Run *text2pcap*: Along with *imsi.csv*, I obtain *imsi.pcap*, which I can open with wireshark.
 
 ## 5. Active Attack (1): Location Leak
 ## 6. Active Attack (2): Denial-of-Service (DoS)
