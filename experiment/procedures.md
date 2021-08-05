@@ -451,7 +451,7 @@ As a practice, I started off by running pdsch_ue.c with the following command to
 $ ~/srsRAN/build/lib/examples/pdsch_ue –r fffe –f 889000000
 ```
 
-However, this will not output the hex bytes of MIB & SIB messages. Therefore, I needed to add the function *srslte_vec_fprint_byte()* after line 828 to print the hexstring to stdout. pdsch_ue.c should look like so:
+However, this will not output the hex bytes of MIB & SIB messages. Therefore, I needed to add the function *srslte_vec_fprint_byte()* after line 828 to print the hexstring to stdout. ```/srsRAN/lib/examples/pdsch_ue.c``` should look like so:
 
 ```
 828 |             if (n > 0) {
@@ -460,7 +460,13 @@ However, this will not output the hex bytes of MIB & SIB messages. Therefore, I 
 ```
 In *srslte_vec_fprint_byte()*, the argument, *n*, is an integer indicating the data packet (if the value is greater than 1, a data packet is found.), and the other argument, *data*, is a poitner containing the paging packet.
 
-Now, I can see the hex string as below:
+After editing the c file, I need to compile it with the following command in ```/srsRAN/build```:
+
+```
+$ make
+```
+
+Now, run pdsch_ue.c again and I can see the hex string as below:
 
 ![pdsch_ue result](/images/pdsch_ue_result.png)
 
