@@ -1,4 +1,4 @@
-# Beyond the IMSI Catcher
+# Beyond the IMSI Catcher (Temporarily suspended due to weak 4G signals in the research area)
 
 
 
